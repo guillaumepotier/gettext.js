@@ -24,7 +24,37 @@ and without any tests.
 
 ## Installation
 
+### Node
+
+Install the lib with the following command: `npm install gettext.js --save`
+
+Require it in your project:
+
+```javascript
+var i18n = require('gettext.js');
+i18n.gettext('foo');
+```
+
+### Browser
+
+```html
+<script src="/PATH/TO/gettext.js" type="text/javascript"></script>
+<script>
+  window.i18n.gettext('foo');
+</script>
+```
+
 ## Usage
+
+### Load your messages
+
+### `gettext(msgid)`
+
+Translate a string.
+
+### `ngettext(msgid, msgid_plural, n)`
+
+Translate a pluralizable string
 
 ## Supported JSON format
 
