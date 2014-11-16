@@ -1,0 +1,27 @@
+{
+    "name": "gettext.js",
+    "version": "0.0.1",
+    "scripts": {
+        "test": "node node_modules/karma/bin/karma start tests/karma.config.js",
+        "test-dev": "node node_modules/karma/bin/karma start tests/karma.config.dev.js",
+        "build": "node node_modules/gulp/bin/gulp.js"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "karma": "*",
+        "karma-mocha": "*",
+        "karma-sinon-expect": "*",
+        "karma-chrome-launcher": "*",
+        "karma-firefox-launcher": "*",
+        "karma-safari-launcher": "*",
+        "karma-opera-launcher": "*",
+        "karma-ie-launcher": "*",
+        "karma-phantomjs-launcher": "*",
+        "gulp": "*",
+        "gulp-uglify": "*",
+        "gulp-rename": "*"
+    },
+    "spm": {
+        "main": "lib/gettext.js"
+    }
+}
