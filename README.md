@@ -41,8 +41,12 @@ i18n.gettext('foo');
 
 ### Browser
 
+Download the latest
+[archive](https://github.com/guillaumepotier/gettext.js/archive/master.zip) or
+get it through bower: `bower install gettext.js --save`
+
 ```html
-<script src="/PATH/TO/gettext.js" type="text/javascript"></script>
+<script src="/path/to/gettext.js" type="text/javascript"></script>
 <script>
   window.i18n.gettext('foo');
 </script>
@@ -52,13 +56,47 @@ i18n.gettext('foo');
 
 ### Load your messages
 
+You can load your messages these ways:
+
+```javascript
+// i18n.setMessages(domain, locale, messages, plural_form);
+i18n.setMessages('messages', 'fr', {
+  "Welcome": "Bienvenue",
+  "There is %1 apple": [
+    "Il y a %1 pomme",
+    "Il y a %1 pommes"
+  ]
+}, 'nplurals=2; plural=n>1;');
+```
+
+```javascript
+// i18n.loadJSON(jsonData /*, domain */);
+var json = {
+  "": {
+    "locale": "fr",
+    "plural-forms": "nplurals=2; plural=n>1;"
+  }
+  "Welcome": "Bienvenue",
+  "There is %1 apple": [
+    "Il y a %1 pomme",
+    "Il y a %1 pommes"
+  ]
+};
+i18n.loadJSON(jsonData, 'messages');
+```
+
+See Required JSON format section below for more info.
+
+
 ### `gettext(msgid)`
 
 Translate a string.
 
+
 ### `ngettext(msgid, msgid_plural, n)`
 
 Translate a pluralizable string
+
 
 ### Variabilized strings
 
@@ -67,6 +105,7 @@ Translate a pluralizable string
 
 It uses the public method `i18n.strfmt("string", var1, var2, ...)` you could
 reuse elsewhere in your project.
+
 
 ## Required JSON format
 
@@ -93,6 +132,7 @@ You'll find in `/bin` a `po2json.js` converter, based on the excellent
 
 Use `bin/po2json.js input.po output.json` or
 `bin/po2json.js input.po output.json -p` for pretty format.
+
 
 ## Parsers
 
