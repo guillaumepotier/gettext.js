@@ -114,14 +114,14 @@
 
         return this;
       },
-      loadJSON: function (domain, jsonData) {
-        if (!jsonData[""] || !jsonData[""].language || !jsonData[""].plural_forms)
-          throw new Error('Wrong JSON, it must have an empty key ("") with "language" and "plural_forms" information');
+      loadJSON: function (jsonData) {
+        if (!jsonData[""] || !jsonData[""].lang || !jsonData[""].domain || !jsonData[""].plural_forms)
+          throw new Error('Wrong JSON, it must have an empty key with domain, lang and plural_forms information');
 
         var headers = jsonData[""];
         delete jsonData[""];
 
-        this.setMessages(domain, headers.language, jsonData, headers.plural_forms);
+        this.setMessages(headers.domain, headers.lang, jsonData, headers.plural_forms);
       },
       setLocale: function (locale) {
         _locale = locale;
@@ -177,7 +177,6 @@
     define(function() { return i18n; });
 
   // Standard window browser thingy
-  } else {
+  } else
     root['i18n'] = i18n;
-  }
 })(this);
