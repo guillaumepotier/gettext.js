@@ -58,6 +58,9 @@ Translate a pluralizable string
 
 ## Required JSON format
 
+You'll find in `/bin` a `po2json.js` converter, based on the excellent [po2json](https://github.com/mikeedwards/po2json) project that will dump your `.po` files into the proper json format below:
+
+```json
 {
     "": {
         "lang": "en",
@@ -72,6 +75,9 @@ Translate a pluralizable string
     ],
     "a context\u0004a contextualized key": "translation here"
 }
+```
+
+Use `bin/po2json.js input.po output.json` or `bin/po2json.js input.po output.json -p` for pretty format.
 
 ## Parsers
 
