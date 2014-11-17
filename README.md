@@ -10,7 +10,11 @@ way in your javascript projects.
 gettext.js aim is to port the famous GNU gettext and ngettext functions to
 javascript node and browser applications.
 It should be standards respectful and lightweight (no dictionary loading
-management, no extra features)
+management, no extra features).
+
+The result is a < 200 lines javascript tiny lib yet implementing fully
+`gettext()` and `ngettext()` and having the lighter json translation files
+possible (embeding only translated forms, and not much headers).
 
 There are plenty good i18n libraries out there, notably
 [Jed](https://github.com/SlexAxton/Jed) and [i18n-next](http://i18next.com/),
@@ -56,9 +60,19 @@ Translate a string.
 
 Translate a pluralizable string
 
+### Variabilized strings
+
+`gettext('There are %1 in the %2`, 'apples', 'bowl'); -> "There are apples in the bowl`
+`ngettext('One %2', '%1 %2', 10, 'bananas'); -> "10 bananas"`
+
+It uses the public method `i18n.strfmt("string", var1, var2, ...)` you could
+reuse elsewhere in your project.
+
 ## Required JSON format
 
-You'll find in `/bin` a `po2json.js` converter, based on the excellent [po2json](https://github.com/mikeedwards/po2json) project that will dump your `.po` files into the proper json format below:
+You'll find in `/bin` a `po2json.js` converter, based on the excellent
+[po2json](https://github.com/mikeedwards/po2json) project that will dump your
+`.po` files into the proper json format below:
 
 ```json
 {
@@ -77,7 +91,8 @@ You'll find in `/bin` a `po2json.js` converter, based on the excellent [po2json]
 }
 ```
 
-Use `bin/po2json.js input.po output.json` or `bin/po2json.js input.po output.json -p` for pretty format.
+Use `bin/po2json.js input.po output.json` or
+`bin/po2json.js input.po output.json -p` for pretty format.
 
 ## Parsers
 

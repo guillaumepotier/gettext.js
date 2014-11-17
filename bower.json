@@ -1,0 +1,26 @@
+{
+  "name": "gettext.js",
+  "version": "0.0.1",
+  "ignore": [
+    "**/.*",
+    "tests",
+    "*.md",
+    ".json",
+    ".yml",
+    "package.json"
+  ],
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "gettext",
+    "ngettext",
+    "po"
+  ],
+  "author": {
+    "name": "Guillaume Potier",
+    "email": "guillaume@wisembly.com",
+    "url": "http://guillaumepotier.com/"
+  },
+  "license": "MIT",
+  "main": "dist/gettext.js"
+}

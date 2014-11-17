@@ -44,6 +44,9 @@
                     expect(i18n.gettext('not %1 translated', 'correctly')).to.be('not correctly translated');
                     expect(i18n.gettext('not %1 %2 translated', 'fully', 'correctly')).to.be('not fully correctly translated');
                 });
+            });
+
+            describe('ngettext', function () {
                 it('should handle peacefully plural untranslated keys', function () {
                     // english default plural rule is n !== 1
                     expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 0)).to.be('0 not translated plural');
@@ -62,6 +65,30 @@
                 });
             });
 
+            describe('loadJSON', function () {
+                it('should properly load json', function () {
+                    var parsedJSON = {
+                        "": {
+                            "language": "fr",
+                            "plural-forms": "nplurals=2; plural=n>1;"
+                        },
+                        "Save": "Sauvegarder",
+                        "There is %1 apple": [
+                            "Il y a %1 pomme",
+                            "Il y a % pommes"
+                        ],
+                        "Checkout\u0004Save": "Sauvegarder votre panier"
+                    },
+                    i18n = window.i18n()
+                        .loadJSON(JSON.stringify(parsedJSON))
+                        .setLocale('fr');
+                    expect(i18n.getLocale(), 'fr');
+                    expect(i18n.textdomain(), 'messages');
+                    expect(i18n.gettext('Save'), 'Sauvegarder');
+                    expect(i18n.gettext('There is %1 apple', 'There are %1 apples', 0), 'Il y a 0 pomme');
+                    expect(i18n.gettext('There is %1 apple', 'There are %1 apples', 2), 'Il y a 2 pommes');
+                });
+            });
         });
     });
 }());
