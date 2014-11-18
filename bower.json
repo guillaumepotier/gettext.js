@@ -4,10 +4,12 @@
   "ignore": [
     "**/.*",
     "tests",
+    "lib",
     "*.md",
     ".json",
     ".yml",
-    "package.json"
+    "package.json",
+    "gulpfile.js"
   ],
   "keywords": [
     "i18n",

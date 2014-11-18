@@ -39,7 +39,7 @@
 
   var i18n = function (options) {
     options = options || {};
-    this.__version = '0.0.1';
+    this.__version = '0.0.2';
 
     var
       _locale = options.locale || defaults.locale,
@@ -101,27 +101,30 @@
         if (!domain || !locale || !messages)
           throw new Error('You must provide a domain, a locale and messages');
 
-        if ('string' !== typeof domain || 'string' !== locale || !_.isObject(messages))
+        if ('string' !== typeof domain || 'string' !== typeof locale || !_.isObject(messages))
           throw new Error('Invalid arguments');
 
         if (plural_forms)
           _plural_forms = plural_forms;
 
-        if (!this.dictionary[domain])
+        if (!_dictionary[domain])
           _dictionary[domain] = {};
 
         _dictionary[domain][locale] = messages;
 
         return this;
       },
-      loadJSON: function (jsonData) {
-        if (!jsonData[""] || !jsonData[""].lang || !jsonData[""].domain || !jsonData[""].plural_forms)
-          throw new Error('Wrong JSON, it must have an empty key with domain, lang and plural_forms information');
+      loadJSON: function (jsonData, domain) {
+        if (!_.isObject(jsonData))
+          jsonData = JSON.parse(jsonData);
+
+        if (!jsonData[""] || !jsonData[""]['language'] || !jsonData[""]['plural-forms'])
+          throw new Error('Wrong JSON, it must have an empty key ("") with "language" and "plural-forms" information');
 
         var headers = jsonData[""];
         delete jsonData[""];
 
-        this.setMessages(headers.domain, headers.lang, jsonData, headers.plural_forms);
+        return this.setMessages(domain || defaults.domain, headers['language'], jsonData, headers['plural-forms']);
       },
       setLocale: function (locale) {
         _locale = locale;
@@ -177,6 +180,7 @@
     define(function() { return i18n; });
 
   // Standard window browser thingy
-  } else
+  } else {
     root['i18n'] = i18n;
+  }
 })(this);

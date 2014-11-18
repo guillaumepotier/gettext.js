@@ -1,10 +1,13 @@
 {
     "name": "gettext.js",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "scripts": {
         "test": "node node_modules/karma/bin/karma start tests/karma.config.js",
         "test-dev": "node node_modules/karma/bin/karma start tests/karma.config.dev.js",
         "build": "node node_modules/gulp/bin/gulp.js"
+    },
+    "bin": {
+        "po2json-gettextjs": "bin/po2json"
     },
     "dependencies": {
         "po2json": "^0.3.2"
