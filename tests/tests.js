@@ -75,7 +75,7 @@
                         "Save": "Sauvegarder",
                         "There is %1 apple": [
                             "Il y a %1 pomme",
-                            "Il y a % pommes"
+                            "Il y a %1 pommes"
                         ],
                         "Checkout\u0004Save": "Sauvegarder votre panier"
                     },
@@ -84,9 +84,9 @@
                         .setLocale('fr');
                     expect(i18n.getLocale(), 'fr');
                     expect(i18n.textdomain(), 'messages');
-                    expect(i18n.gettext('Save'), 'Sauvegarder');
-                    expect(i18n.gettext('There is %1 apple', 'There are %1 apples', 0), 'Il y a 0 pomme');
-                    expect(i18n.gettext('There is %1 apple', 'There are %1 apples', 2), 'Il y a 2 pommes');
+                    expect(i18n.gettext('Save')).to.be('Sauvegarder');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 0)).to.be('Il y a 0 pomme');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2)).to.be('Il y a 2 pommes');
                 });
             });
         });

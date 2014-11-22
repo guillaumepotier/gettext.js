@@ -39,7 +39,7 @@
 
   var i18n = function (options) {
     options = options || {};
-    this.__version = '0.0.2';
+    this.__version = '0.1.0';
 
     var
       _locale = options.locale || defaults.locale,
@@ -150,14 +150,14 @@
         return this.dcnpgettext.apply(this, [undef, msgctxt, msgid, undef, undef].concat(Array.prototype.slice.call(arguments, 2)));
       },
       dcnpgettext: function (domain, msgctxt, msgid, msgid_plural, n /* , extra */) {
-        domain = domain || this.domain;
+        domain = domain || _domain;
 
         if ('string' !== typeof msgid)
           throw new Error(this.strfmt('Msgid "%1" is not a valid translatable string', msgid));
 
         var
           key = msgctxt ? msgctxt + _ctxt_delimiter + msgid : msgid,
-          translation = _.get(_dictionary, 'domain.' + _locale + '.' + key);
+          translation = _.get(_dictionary, _domain + '.' + _locale + '.' + key);
 
         // Singular form
         if (!msgid_plural)

@@ -136,6 +136,10 @@ Use `bin/po2json.js input.po output.json` or
 
 ## Parsers
 
+You could use [xgettext-php](https://github.com/Wisembly/xgettext-php) parser
+to parse your files. It provides helpful javascript and handlebars parsers.
+
+
 ## License
 
 MIT
