@@ -16,20 +16,6 @@
     },
     isArray: function (obj) {
       return toString.call(obj) === '[object Array]';
-    },
-    // _.get(window, 'foo.bar.baz') => window[foo][bar][baz]
-    get: function (obj, path) {
-      var
-        i = 0,
-        paths = (path || '').split('.');
-
-      while (this.isObject(obj) || this.isArray(obj)) {
-        obj = obj[paths[i++]];
-        if (i === paths.length)
-          return obj;
-      }
-
-      return undef;
     }
   };
 
@@ -39,7 +25,7 @@
 
   var i18n = function (options) {
     options = options || {};
-    this.__version = '0.1.0';
+    this.__version = '0.3.0';
 
     var
       _locale = options.locale || defaults.locale,
@@ -76,7 +62,7 @@
           // Carefull here, this is a hidden eval() equivalent..
           // Risk should be reasonable though since we test the plural_form through regex before
           // taken from https://github.com/Orange-OpenSource/gettext.js/blob/master/lib.gettext.js
-          // TODO: should test if https://github.com/soney/jsep present and use it
+          // TODO: should test if https://github.com/soney/jsep present and use it if so
           _plural_func = new Function("n", 'var plural, nplurals; '+ _plural_forms +' return { nplural: nplurals, plural: (plural === true ? 1 : (plural ? plural : 0)) };');
         }
 
@@ -118,11 +104,11 @@
         if (!_.isObject(jsonData))
           jsonData = JSON.parse(jsonData);
 
-        if (!jsonData[""] || !jsonData[""]['language'] || !jsonData[""]['plural-forms'])
+        if (!jsonData[''] || !jsonData['']['language'] || !jsonData['']['plural-forms'])
           throw new Error('Wrong JSON, it must have an empty key ("") with "language" and "plural-forms" information');
 
-        var headers = jsonData[""];
-        delete jsonData[""];
+        var headers = jsonData[''];
+        delete jsonData[''];
 
         return this.setMessages(domain || defaults.domain, headers['language'], jsonData, headers['plural-forms']);
       },
@@ -157,14 +143,14 @@
 
         var
           key = msgctxt ? msgctxt + _ctxt_delimiter + msgid : msgid,
-          translation = _.get(_dictionary, _domain + '.' + _locale + '.' + key);
+          translation = (!_dictionary[domain] || !_dictionary[domain][_locale] || !_dictionary[domain][_locale][key]) ? msgid : _dictionary[domain][_locale][key];
 
         // Singular form
         if (!msgid_plural)
-          return t.apply(this, [[translation || msgid], n].concat(Array.prototype.slice.call(arguments, 5))); // if no translation found, use template msgid
+          return t.apply(this, [[translation], n].concat(Array.prototype.slice.call(arguments, 5)));
 
         // Plural one
-        return t.apply(this, [translation ? translation : [msgid, msgid_plural], n].concat(Array.prototype.slice.call(arguments, 5)));
+        return t.apply(this, [msgid !== translation ? translation : [msgid, msgid_plural], n].concat(Array.prototype.slice.call(arguments, 5)));
       }
     };
   };
