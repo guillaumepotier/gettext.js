@@ -1,31 +1,31 @@
 /*! gettext.js - Guillaume Potier - MIT Licensed */
 (function (root, undef) {
-  // default values that could be overriden in i18n() construct
-  var defaults = {
-    domain: 'messages',
-    locale: document.documentElement.getAttribute('lang') || 'en',
-    plural_form: 'nplurals=2; plural=(n!=1);',
-    ctxt_delimiter: String.fromCharCode(4)
-  };
-
-  // handy mixins taken from underscode.js
-  var _ = {
-    isObject: function (obj) {
-      var type = typeof obj;
-      return type === 'function' || type === 'object' && !!obj;
-    },
-    isArray: function (obj) {
-      return toString.call(obj) === '[object Array]';
-    }
-  };
-
-  // Plural form string regexp
-  // taken from https://github.com/Orange-OpenSource/gettext.js/blob/master/lib.gettext.js
-  var pf_re = new RegExp('^\\s*nplurals\\s*=\\s*[0-9]+\\s*;\\s*plural\\s*=\\s*(?:\\s|[-\\?\\|&=!<>+*/%:;a-zA-Z0-9_\(\)])+');
-
   var i18n = function (options) {
     options = options || {};
-    this.__version = '0.3.0';
+    this.__version = '0.4.0';
+
+    // default values that could be overriden in i18n() construct
+    var defaults = {
+      domain: 'messages',
+      locale: document.documentElement.getAttribute('lang') || 'en',
+      plural_form: 'nplurals=2; plural=(n!=1);',
+      ctxt_delimiter: String.fromCharCode(4)
+    };
+
+    // handy mixins taken from underscode.js
+    var _ = {
+      isObject: function (obj) {
+        var type = typeof obj;
+        return type === 'function' || type === 'object' && !!obj;
+      },
+      isArray: function (obj) {
+        return toString.call(obj) === '[object Array]';
+      }
+    };
+
+    // Plural form string regexp
+    // taken from https://github.com/Orange-OpenSource/gettext.js/blob/master/lib.gettext.js
+    var pf_re = new RegExp('^\\s*nplurals\\s*=\\s*[0-9]+\\s*;\\s*plural\\s*=\\s*(?:\\s|[-\\?\\|&=!<>+*/%:;a-zA-Z0-9_\(\)])+');
 
     var
       _locale = options.locale || defaults.locale,
@@ -79,9 +79,9 @@
       strfmt: strfmt, // expose strfmt util
 
       // Declare shortcuts
-      __: this.gettext,
-      __n: this.ngettext,
-      __p: this.pgettext,
+      __: function () { return this.gettext.apply(this, arguments); },
+      _n: function () { return this.ngettext.apply(this, arguments); },
+      _p: function () { return this.pgettext.apply(this, arguments); },
 
       setMessages: function (domain, locale, messages, plural_forms) {
         if (!domain || !locale || !messages)
