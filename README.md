@@ -88,6 +88,21 @@ i18n.loadJSON(jsonData, 'messages');
 See Required JSON format section below for more info.
 
 
+### Set the locale
+
+You could do it from your dom
+
+```html
+<html lang="fr">
+```
+
+or from javascript
+
+```javascript
+i18n.setLocate('fr');
+```
+
+
 ### `gettext(msgid)`
 
 Translate a string.
