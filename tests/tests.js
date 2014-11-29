@@ -57,11 +57,63 @@
                     expect(i18n.ngettext('%1 not %2 singular', '%1 not %2 plural', 1, 'foo')).to.be('1 not foo singular');
                     expect(i18n.ngettext('%1 not %2 singular', '%1 not %2 plural', 3, 'foo')).to.be('3 not foo plural');
                 });
-                it('should handle other plural forms than default one', function () {
-                    i18n = new window.i18n({ plural_form: 'nplurals=2; plural=n>1;' });
-                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 0)).to.be('0 not translated singular');
+                it('should use default english plural form for untranslated keys', function () {
+                    i18n = new window.i18n({ locale: 'fr', plural_form: 'nplurals=2; plural=n>1;' });
+                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 0)).to.be('0 not translated plural');
                     expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 1)).to.be('1 not translated singular');
                     expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 3)).to.be('3 not translated plural');
+                });
+                it('should handle correctly other language plural', function () {
+                    i18n = new window.i18n({ locale: 'fr' });
+                    i18n.setMessages('messages', 'fr', {
+                        "There is %1 apple": [
+                            "Il y a %1 pomme",
+                            "Il y a %1 pommes"
+                        ]
+                    }, 'nplurals=2; plural=n>1;');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 0)).to.be('Il y a 0 pomme');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 1)).to.be('Il y a 1 pomme');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2)).to.be('Il y a 2 pommes');
+                });
+                it('should fail unvalid plural form', function () {
+                    i18n = new window.i18n({ locale: 'foo' });
+                    i18n.setMessages('messages', 'foo', {
+                        "There is %1 apple": [
+                            "Il y a %1 pomme",
+                            "Il y a %1 pommes"
+                        ]
+                    }, 'nplurals=2; plural=[not valid];');
+
+                    // do not throw error on default plural form if key does not have a translation
+                    expect(i18n.ngettext('foo', 'bar', 2)).to.be('bar');
+
+                    try {
+                        i18n.ngettext('There is %1 apple', 'There are %1 apples', 42);
+                    } catch (e) {
+                        expect(e.message).to.be('The plural form "nplurals=2; plural=[not valid];" is not valid');
+                    }
+                });
+                it('should handle multiple locale & pluals cohabitation', function () {
+                    i18n = new window.i18n({ locale: 'foo' });
+                    i18n.setMessages('messages', 'foo', {
+                        "singular": [
+                            "singular",
+                            "plural"
+                        ]
+                    }, 'nplurals=2; plural=n>10;');
+                    i18n.setMessages('messages', 'bar', {
+                        "singular": [
+                            "singulier",
+                            "pluriel"
+                        ]
+                    }, 'nplurals=2; plural=n>100;');
+                    expect(i18n.ngettext('singular', 'plural', 9)).to.be('singular');
+                    expect(i18n.ngettext('singular', 'plural', 11)).to.be('plural');
+
+                    i18n.setLocale('bar');
+                    expect(i18n.ngettext('singular', 'plural', 9)).to.be('singulier');
+                    expect(i18n.ngettext('singular', 'plural', 11)).to.be('singulier');
+                    expect(i18n.ngettext('singular', 'plural', 111)).to.be('pluriel');
                 });
             });
 
