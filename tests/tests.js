@@ -75,6 +75,27 @@
                     expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 1)).to.be('Il y a 1 pomme');
                     expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2)).to.be('Il y a 2 pommes');
                 });
+                it('should ignore a plural translation when requesting the singular form', function () {
+                    i18n = new window.i18n({ locale: 'fr' });
+                    i18n.setMessages('messages', 'fr', {
+                        "apple": [
+                            "pomme",
+                            "pommes"
+                        ]
+                    }, 'nplurals=2; plural=n>1;');
+                    expect(i18n.gettext('apple')).to.be('apple');
+                    expect(i18n.ngettext('apple', 'apples', 1)).to.be('pomme');
+                    expect(i18n.ngettext('apple', 'apples', 2)).to.be('pommes');
+                });
+                it('should ignore a singular translation when requesting the plural form', function () {
+                    i18n = new window.i18n({ locale: 'fr' });
+                    i18n.setMessages('messages', 'fr', {
+                        "apple": "pomme"
+                    });
+                    expect(i18n.gettext('apple')).to.be('pomme');
+                    expect(i18n.ngettext('apple', 'apples', 1)).to.be('apple');
+                    expect(i18n.ngettext('apple', 'apples', 2)).to.be('apples');
+                });
                 it('should fail unvalid plural form', function () {
                     i18n = new window.i18n({ locale: 'foo' });
                     i18n.setMessages('messages', 'foo', {
