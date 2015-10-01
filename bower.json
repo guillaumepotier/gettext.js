@@ -1,6 +1,5 @@
 {
   "name": "gettext.js",
-  "version": "0.5.0",
   "ignore": [
     "tests",
     "lib",

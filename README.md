@@ -48,7 +48,8 @@ get it through bower: `bower install gettext.js --save`
 ```html
 <script src="/path/to/gettext.js" type="text/javascript"></script>
 <script>
-  window.i18n.gettext('foo');
+  var i18n = window.i18n(options);
+  i18n.gettext('foo');
 </script>
 ```
 
