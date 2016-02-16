@@ -74,19 +74,34 @@
                     expect(i18n.ngettext('%1 not %2 singular', '%1 not %2 plural', 3, 'foo')).to.be('3 not foo plural');
                 });
                 it('should use default english plural form for untranslated keys', function () {
-                    i18n = new window.i18n({ locale: 'fr', plural_form: 'nplurals=2; plural=n>1;' });
+                    i18n = new window.i18n({ locale: 'fr', plural_forms: 'nplurals=2; plural=n>1;' });
                     expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 0)).to.be('0 not translated plural');
                     expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 1)).to.be('1 not translated singular');
                     expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 3)).to.be('3 not translated plural');
                 });
-                it('should handle correctly other language plural', function () {
-                    i18n = new window.i18n({ locale: 'fr' });
+                it('should handle correctly other language plural passed through setMessages method', function () {
+                    i18n = new window.i18n({locale: 'fr'});
                     i18n.setMessages('messages', 'fr', {
                         "There is %1 apple": [
                             "Il y a %1 pomme",
                             "Il y a %1 pommes"
                         ]
                     }, 'nplurals=2; plural=n>1;');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 0)).to.be('Il y a 0 pomme');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 1)).to.be('Il y a 1 pomme');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2)).to.be('Il y a 2 pommes');
+                });
+                it('should handle correctly other language plural passed through init options', function () {
+                    i18n = new window.i18n({
+                        locale: 'fr',
+                        messages: {
+                            "There is %1 apple": [
+                                "Il y a %1 pomme",
+                                "Il y a %1 pommes"
+                            ]
+                        },
+                        plural_forms: 'nplurals=2; plural=n>1;'
+                    });
                     expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 0)).to.be('Il y a 0 pomme');
                     expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 1)).to.be('Il y a 1 pomme');
                     expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2)).to.be('Il y a 2 pommes');

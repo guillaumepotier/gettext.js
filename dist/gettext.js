@@ -28,12 +28,16 @@
       _locale = options.locale || defaults.locale,
       _domain = options.domain || defaults.domain,
       _dictionary = {},
-      _plural_forms = options.plural_forms ? {_locale: options.plural_forms } : {},
+      _plural_forms = {},
       _ctxt_delimiter = options.ctxt_delimiter || defaults.ctxt_delimiter;
 
       if (options.messages) {
         _dictionary[_domain] = {};
         _dictionary[_domain][_locale] = options.messages;
+      }
+
+      if (options.plural_forms) {
+        _plural_forms[_locale] = options.plural_forms;
       }
 
       // sprintf equivalent, takes a string and some arguments to make a computed string
