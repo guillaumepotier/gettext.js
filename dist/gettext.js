@@ -8,7 +8,6 @@
     var defaults = {
       domain: 'messages',
       locale: document.documentElement.getAttribute('lang') || 'en',
-      plural_form: 'nplurals=2; plural=(n!=1);',
       plural_func: function (n) { return { nplurals: 2, plural: (n!=1) ? 1 : 0 }; },
       ctxt_delimiter: String.fromCharCode(4) // \u0004
     };
