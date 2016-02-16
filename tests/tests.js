@@ -7,9 +7,25 @@
             it('should be instanciable', function () {
                 expect(window.i18n()).to.be.an('object');
             });
-            it('should allow to set locale', function () {
+            it('should have default locale', function () {
                 var i18n = window.i18n();
                 expect(i18n.getLocale()).to.be('en');
+            });
+            it('should allow to set locale', function () {
+                var i18n = window.i18n({
+                    locale: 'fr'
+                });
+                expect(i18n.getLocale()).to.be('fr');
+            });
+            it('should allow to set messages', function () {
+                var i18n = window.i18n({
+                    locale: 'fr',
+                    messages: {
+                        "apple": "pomme"
+                    }
+                });
+                expect(i18n.getLocale()).to.be('fr');
+                expect(i18n.gettext('apple')).to.be('pomme');
             });
         });
         describe('methods', function () {

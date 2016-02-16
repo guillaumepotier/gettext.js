@@ -28,9 +28,14 @@
       _plural_funcs = {},
       _locale = options.locale || defaults.locale,
       _domain = options.domain || defaults.domain,
-      _dictionary = options.messages ? {_locale: options.messages } : {},
+      _dictionary = {},
       _plural_forms = options.plural_forms ? {_locale: options.plural_forms } : {},
       _ctxt_delimiter = options.ctxt_delimiter || defaults.ctxt_delimiter;
+
+      if (options.messages) {
+        _dictionary[_domain] = {};
+        _dictionary[_domain][_locale] = options.messages;
+      }
 
       // sprintf equivalent, takes a string and some arguments to make a computed string
       // eg: strfmt("%1 dogs are in %2", 7, "the kitchen"); => "7 dogs are in the kitchen"
