@@ -8,7 +8,7 @@
     var defaults = {
       domain: 'messages',
       locale: document.documentElement.getAttribute('lang') || 'en',
-      plural_func: function (n) { return { nplurals: 2, plural: (n!=1) ? 1 : 0 }; },
+      plural_func: function (n) { return { nplural: 2, plural: (n!=1) ? 1 : 0 }; },
       ctxt_delimiter: String.fromCharCode(4) // \u0004
     };
 
@@ -91,7 +91,7 @@
         }
 
         // If there is a problem with plurals, fallback to singular one
-        if ('undefined' === typeof plural.plural || plural.plural > plural.nplural || messages.length < plural.plural)
+        if ('undefined' === typeof plural.plural || plural.plural > plural.nplural || messages.length <= plural.plural)
           plural.plural = 0;
 
         return strfmt.apply(this, [messages[plural.plural], n].concat(Array.prototype.slice.call(arguments, 3)));

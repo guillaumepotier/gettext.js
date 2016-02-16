@@ -167,6 +167,28 @@
                     expect(i18n.ngettext('singular', 'plural', 11)).to.be('singulier');
                     expect(i18n.ngettext('singular', 'plural', 111)).to.be('pluriel');
                 });
+                it('should fallback to singular form if there is a problem with plurals', function () {
+                    // incorrect plural, more than nplurals
+                    i18n = new window.i18n({ locale: 'foo' });
+                    i18n.setMessages('messages', 'foo', {
+                        "apple": [
+                            "pomme",
+                            "pommes"
+                        ]
+                    }, 'nplurals=2; plural=3;');
+                    expect(i18n.ngettext('apple', 'apples', 1)).to.be('pomme');
+
+                    // plural is correct, but according to nplurals there should be more translations
+                    i18n = new window.i18n({ locale: 'ru' });
+                    i18n.setMessages('messages', 'ru', {
+                        "%1 apple": [
+                            "%1 яблоко",
+                            "%1 яблока"
+                            // "%1 яблок" - missed translation
+                        ]
+                    }, "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
+                    expect(i18n.ngettext('%1 apple', '%1 apples', 5)).to.be('5 яблоко');
+                });
             });
 
             describe('loadJSON', function () {
