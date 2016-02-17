@@ -8,7 +8,7 @@
     var defaults = {
       domain: 'messages',
       locale: document.documentElement.getAttribute('lang') || 'en',
-      plural_func: function (n) { return { nplural: 2, plural: (n!=1) ? 1 : 0 }; },
+      plural_func: function (n) { return { nplurals: 2, plural: (n!=1) ? 1 : 0 }; },
       ctxt_delimiter: String.fromCharCode(4) // \u0004
     };
 
@@ -64,7 +64,7 @@
         // Risk should be reasonable though since we test the plural_form through regex before
         // taken from https://github.com/Orange-OpenSource/gettext.js/blob/master/lib.gettext.js
         // TODO: should test if https://github.com/soney/jsep present and use it if so
-        return new Function("n", 'var plural, nplurals; '+ plural_form +' return { nplural: nplurals, plural: (plural === true ? 1 : (plural ? plural : 0)) };');
+        return new Function("n", 'var plural, nplurals; '+ plural_form +' return { nplurals: nplurals, plural: (plural === true ? 1 : (plural ? plural : 0)) };');
       };
 
       // Proper translation function that handle plurals and directives
@@ -91,7 +91,7 @@
         }
 
         // If there is a problem with plurals, fallback to singular one
-        if ('undefined' === typeof plural.plural || plural.plural > plural.nplural || messages.length <= plural.plural)
+        if ('undefined' === typeof plural.plural || plural.plural > plural.nplurals || messages.length <= plural.plural)
           plural.plural = 0;
 
         return strfmt.apply(this, [messages[plural.plural], n].concat(Array.prototype.slice.call(arguments, 3)));
