@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Gettext.js by guillaumepotier</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Gettext.js</h1>
+      <h2 class="project-tagline">gettext.js is a lightweight yet complete and accurate GNU gettext port for node and the browser.</h2>
+      <a href="https://github.com/guillaumepotier/gettext.js" class="btn">View on GitHub</a>
+      <a href="https://github.com/guillaumepotier/gettext.js/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/guillaumepotier/gettext.js/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="gettextjs" class="anchor" href="#gettextjs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>gettext.js</h1>
+
+<p>gettext.js is a lightweight (3k minified!) yet complete and accurate GNU
+gettext port for node and the browser. Manage your i18n translations the right
+way in your javascript projects.</p>
+
+<h2>
+<a id="why-another-i18n-javascript-library" class="anchor" href="#why-another-i18n-javascript-library" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why another i18n javascript library?</h2>
+
+<p>gettext.js aim is to port the famous GNU gettext and ngettext functions to
+javascript node and browser applications.
+It should be standards respectful and lightweight (no dictionary loading
+management, no extra features).</p>
+
+<p>The result is a &lt; 200 lines javascript tiny lib yet implementing fully
+<code>gettext()</code> and <code>ngettext()</code> and having the lighter json translation files
+possible (embeding only translated forms, and not much headers).</p>
+
+<p>There are plenty good i18n libraries out there, notably
+<a href="https://github.com/SlexAxton/Jed">Jed</a> and <a href="http://i18next.com/">i18n-next</a>,
+but either there are too complex and too heavy, or they do not embrace fully
+the gettext API and philosophy.</p>
+
+<p>There is also <a href="https://github.com/Orange-OpenSource/gettext.js">gettext.js</a>
+which is pretty good and heavily inspired this one, but not active since 2012
+and without any tests.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<h3>
+<a id="node" class="anchor" href="#node" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Node</h3>
+
+<p>Install the lib with the following command: <code>npm install gettext.js --save</code></p>
+
+<p>Require it in your project:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> i18n <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>gettext.js<span class="pl-pds">'</span></span>);
+<span class="pl-smi">i18n</span>.<span class="pl-en">gettext</span>(<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>);</pre></div>
+
+<h3>
+<a id="browser" class="anchor" href="#browser" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Browser</h3>
+
+<p>Download the latest
+<a href="https://github.com/guillaumepotier/gettext.js/archive/master.zip">archive</a> or
+get it through bower: <code>bower install gettext.js --save</code></p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>/path/to/gettext.js<span class="pl-pds">"</span></span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+<span class="pl-s1">&lt;<span class="pl-ent">script</span>&gt;</span>
+<span class="pl-s1">  <span class="pl-k">var</span> i18n <span class="pl-k">=</span> <span class="pl-c1">window</span>.<span class="pl-en">i18n</span>(options);</span>
+<span class="pl-s1">  <span class="pl-smi">i18n</span>.<span class="pl-en">gettext</span>(<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1">&lt;/<span class="pl-ent">script</span>&gt;</span></pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="load-your-messages" class="anchor" href="#load-your-messages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Load your messages</h3>
+
+<p>You can load your messages these ways:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// i18n.setMessages(domain, locale, messages, plural_form);</span>
+<span class="pl-smi">i18n</span>.<span class="pl-en">setMessages</span>(<span class="pl-s"><span class="pl-pds">'</span>messages<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>fr<span class="pl-pds">'</span></span>, {
+  <span class="pl-s"><span class="pl-pds">"</span>Welcome<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Bienvenue<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>There is %1 apple<span class="pl-pds">"</span></span><span class="pl-k">:</span> [
+    <span class="pl-s"><span class="pl-pds">"</span>Il y a %1 pomme<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>Il y a %1 pommes<span class="pl-pds">"</span></span>
+  ]
+}, <span class="pl-s"><span class="pl-pds">'</span>nplurals=2; plural=n&gt;1;<span class="pl-pds">'</span></span>);</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// i18n.loadJSON(jsonData /*, domain */);</span>
+<span class="pl-k">var</span> json <span class="pl-k">=</span> {
+  <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span><span class="pl-k">:</span> {
+    <span class="pl-s"><span class="pl-pds">"</span>locale<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>fr<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>plural-forms<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>nplurals=2; plural=n&gt;1;<span class="pl-pds">"</span></span>
+  }
+  <span class="pl-s"><span class="pl-pds">"</span>Welcome<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Bienvenue<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>There is %1 apple<span class="pl-pds">"</span></span><span class="pl-k">:</span> [
+    <span class="pl-s"><span class="pl-pds">"</span>Il y a %1 pomme<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>Il y a %1 pommes<span class="pl-pds">"</span></span>
+  ]
+};
+<span class="pl-smi">i18n</span>.<span class="pl-en">loadJSON</span>(jsonData, <span class="pl-s"><span class="pl-pds">'</span>messages<span class="pl-pds">'</span></span>);</pre></div>
+
+<p>See Required JSON format section below for more info.</p>
+
+<h3>
+<a id="set-the-locale" class="anchor" href="#set-the-locale" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Set the locale</h3>
+
+<p>You could do it from your dom</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">html</span> <span class="pl-e">lang</span>=<span class="pl-s"><span class="pl-pds">"</span>fr<span class="pl-pds">"</span></span>&gt;</pre></div>
+
+<p>or from javascript</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">i18n</span>.<span class="pl-en">setLocate</span>(<span class="pl-s"><span class="pl-pds">'</span>fr<span class="pl-pds">'</span></span>);</pre></div>
+
+<h3>
+<a id="gettextmsgid" class="anchor" href="#gettextmsgid" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>gettext(msgid)</code>
+</h3>
+
+<p>Translate a string.</p>
+
+<h3>
+<a id="ngettextmsgid-msgid_plural-n" class="anchor" href="#ngettextmsgid-msgid_plural-n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>ngettext(msgid, msgid_plural, n)</code>
+</h3>
+
+<p>Translate a pluralizable string</p>
+
+<h3>
+<a id="variabilized-strings" class="anchor" href="#variabilized-strings" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Variabilized strings</h3>
+
+<p><code>gettext('There are %1 in the %2</code>, 'apples', 'bowl'); -&gt; "There are apples in the bowl<code>
+</code>ngettext('One %2', '%1 %2', 10, 'bananas'); -&gt; "10 bananas"`</p>
+
+<p>It uses the public method <code>i18n.strfmt("string", var1, var2, ...)</code> you could
+reuse elsewhere in your project.</p>
+
+<h2>
+<a id="required-json-format" class="anchor" href="#required-json-format" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Required JSON format</h2>
+
+<p>You'll find in <code>/bin</code> a <code>po2json.js</code> converter, based on the excellent
+<a href="https://github.com/mikeedwards/po2json">po2json</a> project that will dump your
+<code>.po</code> files into the proper json format below:</p>
+
+<div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>: {
+        <span class="pl-s"><span class="pl-pds">"</span>lang<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>en<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>plural_forms<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>nplurals=2; plural=(n!=1);<span class="pl-pds">"</span></span>
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>simple key<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>It's tranlation<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>another with %1 parameter<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>It's %1 tranlsation<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>a key with plural<span class="pl-pds">"</span></span>: [
+        <span class="pl-s"><span class="pl-pds">"</span>a plural form<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>another plural form<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>could have up to 6 forms with some languages<span class="pl-pds">"</span></span>
+    ],
+    <span class="pl-s"><span class="pl-pds">"</span>a context<span class="pl-cce">\u0004</span>a contextualized key<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>translation here<span class="pl-pds">"</span></span>
+}</pre></div>
+
+<p>Use <code>bin/po2json.js input.po output.json</code> or
+<code>bin/po2json.js input.po output.json -p</code> for pretty format.</p>
+
+<h2>
+<a id="parsers" class="anchor" href="#parsers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Parsers</h2>
+
+<p>You could use <a href="https://github.com/Wisembly/xgettext-php">xgettext-php</a> parser
+to parse your files. It provides helpful javascript and handlebars parsers.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>MIT</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/guillaumepotier/gettext.js">Gettext.js</a> is maintained by <a href="https://github.com/guillaumepotier">guillaumepotier</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
