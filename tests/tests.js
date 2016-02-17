@@ -7,9 +7,25 @@
             it('should be instanciable', function () {
                 expect(window.i18n()).to.be.an('object');
             });
-            it('should allow to set locale', function () {
+            it('should have default locale', function () {
                 var i18n = window.i18n();
                 expect(i18n.getLocale()).to.be('en');
+            });
+            it('should allow to set locale', function () {
+                var i18n = window.i18n({
+                    locale: 'fr'
+                });
+                expect(i18n.getLocale()).to.be('fr');
+            });
+            it('should allow to set messages', function () {
+                var i18n = window.i18n({
+                    locale: 'fr',
+                    messages: {
+                        "apple": "pomme"
+                    }
+                });
+                expect(i18n.getLocale()).to.be('fr');
+                expect(i18n.gettext('apple')).to.be('pomme');
             });
         });
         describe('methods', function () {
@@ -58,19 +74,34 @@
                     expect(i18n.ngettext('%1 not %2 singular', '%1 not %2 plural', 3, 'foo')).to.be('3 not foo plural');
                 });
                 it('should use default english plural form for untranslated keys', function () {
-                    i18n = new window.i18n({ locale: 'fr', plural_form: 'nplurals=2; plural=n>1;' });
+                    i18n = new window.i18n({ locale: 'fr', plural_forms: 'nplurals=2; plural=n>1;' });
                     expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 0)).to.be('0 not translated plural');
                     expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 1)).to.be('1 not translated singular');
                     expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 3)).to.be('3 not translated plural');
                 });
-                it('should handle correctly other language plural', function () {
-                    i18n = new window.i18n({ locale: 'fr' });
+                it('should handle correctly other language plural passed through setMessages method', function () {
+                    i18n = new window.i18n({locale: 'fr'});
                     i18n.setMessages('messages', 'fr', {
                         "There is %1 apple": [
                             "Il y a %1 pomme",
                             "Il y a %1 pommes"
                         ]
                     }, 'nplurals=2; plural=n>1;');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 0)).to.be('Il y a 0 pomme');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 1)).to.be('Il y a 1 pomme');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2)).to.be('Il y a 2 pommes');
+                });
+                it('should handle correctly other language plural passed through init options', function () {
+                    i18n = new window.i18n({
+                        locale: 'fr',
+                        messages: {
+                            "There is %1 apple": [
+                                "Il y a %1 pomme",
+                                "Il y a %1 pommes"
+                            ]
+                        },
+                        plural_forms: 'nplurals=2; plural=n>1;'
+                    });
                     expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 0)).to.be('Il y a 0 pomme');
                     expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 1)).to.be('Il y a 1 pomme');
                     expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2)).to.be('Il y a 2 pommes');
@@ -135,6 +166,28 @@
                     expect(i18n.ngettext('singular', 'plural', 9)).to.be('singulier');
                     expect(i18n.ngettext('singular', 'plural', 11)).to.be('singulier');
                     expect(i18n.ngettext('singular', 'plural', 111)).to.be('pluriel');
+                });
+                it('should fallback to singular form if there is a problem with plurals', function () {
+                    // incorrect plural, more than nplurals
+                    i18n = new window.i18n({ locale: 'foo' });
+                    i18n.setMessages('messages', 'foo', {
+                        "apple": [
+                            "pomme",
+                            "pommes"
+                        ]
+                    }, 'nplurals=2; plural=3;');
+                    expect(i18n.ngettext('apple', 'apples', 1)).to.be('pomme');
+
+                    // plural is correct, but according to nplurals there should be more translations
+                    i18n = new window.i18n({ locale: 'ru' });
+                    i18n.setMessages('messages', 'ru', {
+                        "%1 apple": [
+                            "%1 яблоко",
+                            "%1 яблока"
+                            // "%1 яблок" - missed translation
+                        ]
+                    }, "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
+                    expect(i18n.ngettext('%1 apple', '%1 apples', 5)).to.be('5 яблоко');
                 });
             });
 
