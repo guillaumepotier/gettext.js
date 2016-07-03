@@ -100,7 +100,7 @@ You could do it from your dom
 or from javascript
 
 ```javascript
-i18n.setLocate('fr');
+i18n.setLocale('fr');
 ```
 
 
