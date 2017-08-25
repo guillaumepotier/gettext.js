@@ -28,6 +28,10 @@ and without any tests.
 
 ## Installation
 
+### Debian (9, stretch)
+
+apt-get install libjs-gettext.js
+
 ### Node
 
 Install the lib with the following command: `npm install gettext.js --save`
