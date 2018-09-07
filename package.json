@@ -1,29 +1,30 @@
 {
-    "name": "gettext.js",
-    "version": "0.5.4",
-    "scripts": {
-        "test": "karma start tests/karma.config.js",
-        "test-dev": "karma start tests/karma.config.dev.js",
-        "build": "gulp"
-    },
-    "bin": {
-        "po2json-gettextjs": "bin/po2json"
-    },
-    "dependencies": {
-        "po2json": "^0.3.2"
-    },
-    "devDependencies": {
-        "gulp": "^3.9.1",
-        "gulp-rename": "^1.2.2",
-        "gulp-uglify": "^3.0.0",
-        "karma": "^1.7.1",
-        "karma-mocha": "^1.3.0",
-        "karma-phantomjs-launcher": "^1.0.4",
-        "karma-sinon-expect": "^0.1.4",
-        "mocha": "^4.0.1"
-    },
-    "spm": {
-        "main": "lib/gettext.js"
-    },
+  "name": "gettext.js",
+  "version": "0.5.5",
+  "scripts": {
+    "test": "karma start tests/karma.config.js",
+    "test-dev": "karma start tests/karma.config.dev.js",
+    "build": "gulp"
+  },
+  "bin": {
+    "po2json-gettextjs": "bin/po2json"
+  },
+  "dependencies": {
+    "hoek": "^5.0.4",
+    "po2json": "^0.3.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0",
+    "karma": "^3.0.0",
+    "karma-mocha": "^1.3.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-sinon-expect": "^0.1.4",
+    "mocha": "^4.0.1"
+  },
+  "spm": {
     "main": "lib/gettext.js"
+  },
+  "main": "lib/gettext.js"
 }
