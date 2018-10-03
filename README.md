@@ -78,16 +78,16 @@ i18n.setMessages('messages', 'fr', {
 // i18n.loadJSON(jsonData /*, domain */);
 var json = {
   "": {
-    "locale": "fr",
+    "language": "fr",
     "plural-forms": "nplurals=2; plural=n>1;"
-  }
+  },
   "Welcome": "Bienvenue",
   "There is %1 apple": [
     "Il y a %1 pomme",
     "Il y a %1 pommes"
   ]
 };
-i18n.loadJSON(jsonData, 'messages');
+i18n.loadJSON(json, 'messages');
 ```
 
 See Required JSON format section below for more info.
