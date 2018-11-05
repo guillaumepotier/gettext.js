@@ -52,6 +52,18 @@
                 });
             });
 
+            describe('expand_locale', function() {
+                it('should be a i18n method', function() {
+                    expect(i18n.expand_locale).to.be.a('function');
+                });
+                it('should handle simple locale', function() {
+                    expect(i18n.expand_locale('fr')).to.eql(['fr']);
+                });
+                it('should handle complex locale', function() {
+                    expect(i18n.expand_locale('de-CH-1996')).to.eql(['de-CH-1996', 'de-CH', 'de']);
+                });
+            });
+
             describe('gettext', function () {
                 it('should handle peacefully singular untranslated keys', function () {
                     expect(i18n.gettext('not translated')).to.be('not translated');
@@ -59,6 +71,24 @@
                 it('should handle peacefully singular untranslated keys with extra', function () {
                     expect(i18n.gettext('not %1 translated', 'correctly')).to.be('not correctly translated');
                     expect(i18n.gettext('not %1 %2 translated', 'fully', 'correctly')).to.be('not fully correctly translated');
+                });
+                it('should fallback to father language', function() {
+                    i18n = new window.i18n();
+                    i18n.setMessages('messages', 'fr', {
+                        "Mop": "Serpillière",
+                    });
+                    i18n.setMessages('messages', 'fr-BE', {
+                        "Mop": "Torchon",
+                    });
+
+                    i18n.setLocale('fr-BE');
+                    expect(i18n.gettext("Mop")).to.be("Torchon");
+
+                    i18n.setLocale('fr');
+                    expect(i18n.gettext("Mop")).to.be("Serpillière");
+
+                    i18n.setLocale('fr-FR');
+                    expect(i18n.gettext("Mop")).to.be("Serpillière");
                 });
             });
 
