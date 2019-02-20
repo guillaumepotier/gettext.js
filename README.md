@@ -120,8 +120,9 @@ Translate a pluralizable string
 
 ### Variabilized strings
 
-`gettext('There are %1 in the %2`, 'apples', 'bowl'); -> "There are apples in the bowl`
-`ngettext('One %2', '%1 %2', 10, 'bananas'); -> "10 bananas"`
+`gettext('There are %1 in the %2', 'apples', 'bowl');` -> "There are apples in the bowl
+
+`ngettext('One %2', '%1 %2', 10, 'bananas');` -> "10 bananas"
 
 It uses the public method `i18n.strfmt("string", var1, var2, ...)` you could
 reuse elsewhere in your project.
