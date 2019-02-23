@@ -127,6 +127,16 @@ Translate a pluralizable string
 It uses the public method `i18n.strfmt("string", var1, var2, ...)` you could
 reuse elsewhere in your project.
 
+#### Literal percent sign (%)
+
+When you need to have literal percent sign followed by a number (common in Hebrew or Turkish) you can escape it using another percent sign, for example:
+
+`gettext('My credit card has an interest rate of %%%1', 20);` -> "My credit card has an interest rate of %20"
+
+or without variables
+
+`gettext('My credit card has an interest rate of %%20');` -> "My credit card has an interest rate of %20"
+
 
 ## Required JSON format
 
