@@ -50,6 +50,12 @@
                 it('should handle repeat', function () {
                     expect(i18n.strfmt('foo %1 baz %1', 'bar', 42)).to.be('foo bar baz bar');
                 });
+                it('should handle literal percent (%) signs', function () {
+                    expect(i18n.strfmt('foo 1%% bar')).to.be('foo 1% bar');
+                    expect(i18n.strfmt('foo %1%% bar', 10)).to.be('foo 10% bar');
+                    expect(i18n.strfmt('foo %%1 bar')).to.be('foo %1 bar');
+                    expect(i18n.strfmt('foo %%%1 bar', 10)).to.be('foo %10 bar');
+                });
             });
 
             describe('expand_locale', function() {
