@@ -10,8 +10,7 @@
     "po2json-gettextjs": "bin/po2json"
   },
   "dependencies": {
-    "hoek": "^5.0.4",
-    "po2json": "^0.3.2"
+    "po2json": "^0.4.0"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
