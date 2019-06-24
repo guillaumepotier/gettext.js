@@ -1,10 +1,10 @@
-var gettext = (function () {
+var i18n = (function () {
    'use strict';
 
    /*! gettext.js - Guillaume Potier - MIT Licensed */
    var i18n = function (options) {
     options = options || {};
-    this.__version = '0.5.3';
+    // this.__version = '0.5.3';
 
     // default values that could be overriden in i18n() construct
     var defaults = {
@@ -169,13 +169,13 @@ var gettext = (function () {
         return this;
       },
       gettext: function (msgid /* , extra */) {
-        return this.dcnpgettext.apply(this, [undef, undef, msgid, undef, undef].concat(Array.prototype.slice.call(arguments, 1)));
+        return this.dcnpgettext.apply(this, [undefined, undefined, msgid, undefined, undefined].concat(Array.prototype.slice.call(arguments, 1)));
       },
       ngettext: function (msgid, msgid_plural, n /* , extra */) {
-        return this.dcnpgettext.apply(this, [undef, undef, msgid, msgid_plural, n].concat(Array.prototype.slice.call(arguments, 3)));
+        return this.dcnpgettext.apply(this, [undefined, undefined, msgid, msgid_plural, n].concat(Array.prototype.slice.call(arguments, 3)));
       },
       pgettext: function (msgctxt, msgid /* , extra */) {
-        return this.dcnpgettext.apply(this, [undef, msgctxt, msgid, undef, undef].concat(Array.prototype.slice.call(arguments, 2)));
+        return this.dcnpgettext.apply(this, [undefined, msgctxt, msgid, undefined, undefined].concat(Array.prototype.slice.call(arguments, 2)));
       },
       dcnpgettext: function (domain, msgctxt, msgid, msgid_plural, n /* , extra */) {
         domain = domain || _domain;
