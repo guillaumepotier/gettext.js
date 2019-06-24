@@ -19,7 +19,7 @@ const minify = name => () => src(`./${BUILD_DIR}/gettext.${name}.js`)
    .pipe(uglify({output: { comments: 'some' }}))
 	.pipe(dest(BUILD_DIR));
 
-const formats = ['amd'/*, 'cjs'*/, 'esm', 'iife'/*, 'system', 'umd'*/];
+const formats = ['amd', 'cjs', 'esm', 'iife'/*, 'system', 'umd'*/];
 
 const build = series(
 	parallel(formats.map(pack)),
