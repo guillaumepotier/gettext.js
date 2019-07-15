@@ -1,6 +1,6 @@
 {
   "name": "gettext.js",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "scripts": {
     "test": "karma start tests/karma.config.js",
     "test-dev": "karma start tests/karma.config.dev.js",
