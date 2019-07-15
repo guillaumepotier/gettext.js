@@ -10,7 +10,7 @@ const cleanUp = () => del([BUILD_DIR]);
 
 
 const pack = format => () => src(`lib/gettext.js`)
-	.pipe(rollup({format, name:'i18n'}))
+	.pipe(rollup({format, name:'i18n', amd: {id: null}}))
 	.pipe(rename({suffix: `.${format}`}))
 	.pipe(dest(BUILD_DIR));
 

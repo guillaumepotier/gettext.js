@@ -1,4 +1,4 @@
-define('i18n', function () { 'use strict';
+define(function () { 'use strict';
 
    /*! gettext.js - Guillaume Potier - MIT Licensed */
    var i18n = function (options) {
