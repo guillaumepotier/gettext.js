@@ -1,3 +1,5 @@
+'use strict';
+
 /*! gettext.js - Guillaume Potier - MIT Licensed */
 var i18n = function (options) {
  options = options || {};
@@ -221,4 +223,4 @@ var i18n = function (options) {
  };
 };
 
-export default i18n;
+module.exports = i18n;

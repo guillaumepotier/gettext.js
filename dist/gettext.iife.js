@@ -1,13 +1,15 @@
-/*! gettext.js - Guillaume Potier - MIT Licensed */
-(function (root, undef) {
-  var i18n = function (options) {
+var i18n = (function () {
+   'use strict';
+
+   /*! gettext.js - Guillaume Potier - MIT Licensed */
+   var i18n = function (options) {
     options = options || {};
-    this.__version = '0.5.3';
+    // this.__version = '0.5.3';
 
     // default values that could be overriden in i18n() construct
     var defaults = {
       domain: 'messages',
-      locale: document.documentElement.getAttribute('lang') || 'en',
+      locale: (typeof document !== 'undefined' ? document.documentElement.getAttribute('lang') : false) || 'en',
       plural_func: function (n) { return { nplurals: 2, plural: (n!=1) ? 1 : 0 }; },
       ctxt_delimiter: String.fromCharCode(4) // \u0004
     };
@@ -46,9 +48,26 @@
       var strfmt = function (fmt) {
         var args = arguments;
 
-        return fmt.replace(/%(\d+)/g, function (str, p1) {
-          return args[p1];
-        });
+        return fmt
+          // put space after double % to prevent placeholder replacement of such matches
+          .replace(/%%/g, '%% ')
+          // replace placeholders
+          .replace(/%(\d+)/g, function (str, p1) {
+            return args[p1];
+          })
+          // replace double % and space with single %
+          .replace(/%% /g, '%')
+      };
+
+      var expand_locale = function(locale) {
+          var locales = [locale],
+              i = locale.lastIndexOf('-');
+          while (i > 0) {
+              locale = locale.slice(0, i);
+              locales.push(locale);
+              i = locale.lastIndexOf('-');
+          }
+          return locales;
       };
 
       var getPluralFunc = function (plural_form) {
@@ -99,6 +118,7 @@
 
     return {
       strfmt: strfmt, // expose strfmt util
+      expand_locale: expand_locale, // expose expand_locale util
 
       // Declare shortcuts
       __: function () { return this.gettext.apply(this, arguments); },
@@ -149,13 +169,13 @@
         return this;
       },
       gettext: function (msgid /* , extra */) {
-        return this.dcnpgettext.apply(this, [undef, undef, msgid, undef, undef].concat(Array.prototype.slice.call(arguments, 1)));
+        return this.dcnpgettext.apply(this, [undefined, undefined, msgid, undefined, undefined].concat(Array.prototype.slice.call(arguments, 1)));
       },
       ngettext: function (msgid, msgid_plural, n /* , extra */) {
-        return this.dcnpgettext.apply(this, [undef, undef, msgid, msgid_plural, n].concat(Array.prototype.slice.call(arguments, 3)));
+        return this.dcnpgettext.apply(this, [undefined, undefined, msgid, msgid_plural, n].concat(Array.prototype.slice.call(arguments, 3)));
       },
       pgettext: function (msgctxt, msgid /* , extra */) {
-        return this.dcnpgettext.apply(this, [undef, msgctxt, msgid, undef, undef].concat(Array.prototype.slice.call(arguments, 2)));
+        return this.dcnpgettext.apply(this, [undefined, msgctxt, msgid, undefined, undefined].concat(Array.prototype.slice.call(arguments, 2)));
       },
       dcnpgettext: function (domain, msgctxt, msgid, msgid_plural, n /* , extra */) {
         domain = domain || _domain;
@@ -167,22 +187,31 @@
           translation,
           options = {},
           key = msgctxt ? msgctxt + _ctxt_delimiter + msgid : msgid,
-          exist = _dictionary[domain] && _dictionary[domain][_locale] && _dictionary[domain][_locale][key];
+          exist,
+          locale;
+        var locales = expand_locale(_locale);
+        for (var i in locales) {
+            locale = locales[i];
+            exist = _dictionary[domain] && _dictionary[domain][locale] && _dictionary[domain][locale][key];
 
-        // because it's not possible to define both a singular and a plural form of the same msgid,
-        // we need to check that the stored form is the same as the expected one.
-        // if not, we'll just ignore the translation and consider it as not translated.
-        if (msgid_plural) {
-          exist = exist && "string" !== typeof _dictionary[domain][_locale][key];
-        } else {
-          exist = exist && "string" === typeof _dictionary[domain][_locale][key];
+            // because it's not possible to define both a singular and a plural form of the same msgid,
+            // we need to check that the stored form is the same as the expected one.
+            // if not, we'll just ignore the translation and consider it as not translated.
+            if (msgid_plural) {
+              exist = exist && "string" !== typeof _dictionary[domain][locale][key];
+            } else {
+              exist = exist && "string" === typeof _dictionary[domain][locale][key];
+            }
+            if (exist) {
+                break;
+            }
         }
 
         if (!exist) {
           translation = msgid;
           options.plural_func = defaults.plural_func;
         } else {
-          translation = _dictionary[domain][_locale][key];
+          translation = _dictionary[domain][locale][key];
         }
 
         // Singular form
@@ -193,20 +222,8 @@
         return t.apply(this, [exist ? translation : [msgid, msgid_plural], n, options].concat(Array.prototype.slice.call(arguments, 5)));
       }
     };
-  };
+   };
 
-  // Handle node, commonjs
-  if (typeof exports !== 'undefined') {
-    if (typeof module !== 'undefined' && module.exports)
-      exports = module.exports = i18n;
-    exports.i18n = i18n;
+   return i18n;
 
-  // Handle AMD
-  } else if (typeof define === 'function' && define.amd) {
-    define(function() { return i18n; });
-
-  // Standard window browser
-  } else {
-    root['i18n'] = i18n;
-  }
-})(this);
+}());

@@ -3,7 +3,7 @@ module.exports = function(config) {
     basePath: '../',
     frameworks: ['mocha', 'sinon-expect'],
     files: [
-        'lib/gettext.js',
+        'dist/gettext.iife.js',
         'tests/tests.js',
     ],
     exclude: [],
