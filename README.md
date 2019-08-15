@@ -18,7 +18,7 @@ possible (embeding only translated forms, and not much headers).
 
 There are plenty good i18n libraries out there, notably
 [Jed](https://github.com/SlexAxton/Jed) and [i18n-next](http://i18next.com/),
-but either there are too complex and too heavy, or they do not embrace fully
+but either they are too complex and too heavy, or they do not embrace fully
 the gettext API and philosophy.
 
 There is also [gettext.js](https://github.com/Orange-OpenSource/gettext.js)
