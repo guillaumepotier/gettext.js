@@ -147,8 +147,8 @@ You'll find in `/bin` a `po2json.js` converter, based on the excellent
 ```json
 {
     "": {
-        "lang": "en",
-        "plural_forms": "nplurals=2; plural=(n!=1);"
+        "language": "en",
+        "plural-forms": "nplurals=2; plural=(n!=1);"
     },
     "simple key": "It's tranlation",
     "another with %1 parameter": "It's %1 tranlsation",

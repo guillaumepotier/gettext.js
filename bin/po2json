@@ -8,8 +8,8 @@
 
   {
     "": {
-        "lang": "en",
-        "plural_forms": "nplurals=2; plural=(n!=1);"
+        "language": "en",
+        "plural-forms": "nplurals=2; plural=(n!=1);"
     },
     "simple key": "It's tranlation",
     "another with %1 parameter": "It's %1 tranlsation",
