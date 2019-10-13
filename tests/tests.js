@@ -27,6 +27,31 @@
                 expect(i18n.getLocale()).to.be('fr');
                 expect(i18n.gettext('apple')).to.be('pomme');
             });
+            it('should handle contextualized msgid', function () {
+                var i18n = window.i18n({
+                    locale: 'fr',
+                    plural_forms: 'nplurals=2; plural=n>1;',
+                    messages: {
+                        "foo": "bar",
+                        "ctxt\u0004foo": "baz",
+                        "There is %1 apple": [
+                            "Il y a %1 pomme",
+                            "Il y a %1 pommes"
+                        ],
+                        "ctxt\u0004There is %1 apple": [
+                            "Il y a %1 pomme Golden",
+                            "Il y a %1 pommes Golden"
+                        ],
+                    }
+                });
+                expect(i18n.gettext('foo')).to.be('bar');
+                expect(i18n.gettext('ctxt\u0004foo')).to.be('baz');
+                expect(i18n.gettext('ctxt\u0004baz')).to.be('baz');
+                expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2)).to.be("Il y a 2 pommes");
+                expect(i18n.ngettext('ctxt\u0004There is %1 apple', 'There are %1 apples', 1)).to.be("Il y a 1 pomme Golden");
+                expect(i18n.ngettext('ctxt\u0004There is %1 orange', 'There are %1 oranges', 1)).to.be("There is 1 orange");
+                expect(i18n.ngettext('ctxt\u0004There is %1 orange', 'There are %1 oranges', 3)).to.be("There are 3 oranges");
+            });
         });
         describe('methods', function () {
             var i18n;

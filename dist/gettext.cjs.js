@@ -44,10 +44,17 @@ var i18n = function (options) {
    // sprintf equivalent, takes a string and some arguments to make a computed string
    // eg: strfmt("%1 dogs are in %2", 7, "the kitchen"); => "7 dogs are in the kitchen"
    // eg: strfmt("I like %1, bananas and %1", "apples"); => "I like apples, bananas and apples"
+   // NB: removes msg context if there is one present
    var strfmt = function (fmt) {
-     var args = arguments;
+      var args = arguments;
 
-     return fmt
+      // if there is context, remove it
+      if (fmt.indexOf(_ctxt_delimiter) !== -1) {
+        var parts = fmt.split(_ctxt_delimiter);
+        fmt = parts[1];
+      }
+
+      return fmt
        // put space after double % to prevent placeholder replacement of such matches
        .replace(/%%/g, '%% ')
        // replace placeholders
@@ -90,7 +97,7 @@ var i18n = function (options) {
    var t = function (messages, n, options /* ,extra */) {
      // Singular is very easy, just pass dictionnary message through strfmt
      if (1 === messages.length)
-       return strfmt.apply(this, [messages[0]].concat(Array.prototype.slice.call(arguments, 3)));
+      return strfmt.apply(this, [messages[0]].concat(Array.prototype.slice.call(arguments, 3)));
 
      var plural;
 
@@ -187,23 +194,24 @@ var i18n = function (options) {
        options = {},
        key = msgctxt ? msgctxt + _ctxt_delimiter + msgid : msgid,
        exist,
-       locale;
-     var locales = expand_locale(_locale);
-     for (var i in locales) {
-         locale = locales[i];
-         exist = _dictionary[domain] && _dictionary[domain][locale] && _dictionary[domain][locale][key];
+       locale,
+       locales = expand_locale(_locale);
 
-         // because it's not possible to define both a singular and a plural form of the same msgid,
-         // we need to check that the stored form is the same as the expected one.
-         // if not, we'll just ignore the translation and consider it as not translated.
-         if (msgid_plural) {
-           exist = exist && "string" !== typeof _dictionary[domain][locale][key];
-         } else {
-           exist = exist && "string" === typeof _dictionary[domain][locale][key];
-         }
-         if (exist) {
-             break;
-         }
+     for (var i in locales) {
+        locale = locales[i];
+        exist = _dictionary[domain] && _dictionary[domain][locale] && _dictionary[domain][locale][key];
+
+        // because it's not possible to define both a singular and a plural form of the same msgid,
+        // we need to check that the stored form is the same as the expected one.
+        // if not, we'll just ignore the translation and consider it as not translated.
+        if (msgid_plural) {
+          exist = exist && "string" !== typeof _dictionary[domain][locale][key];
+        } else {
+          exist = exist && "string" === typeof _dictionary[domain][locale][key];
+        }
+        if (exist) {
+          break;
+        }
      }
 
      if (!exist) {
