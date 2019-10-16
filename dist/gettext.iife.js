@@ -49,12 +49,6 @@ var i18n = (function () {
       var strfmt = function (fmt) {
          var args = arguments;
 
-         // if there is context, remove it
-         if (fmt.indexOf(_ctxt_delimiter) !== -1) {
-           var parts = fmt.split(_ctxt_delimiter);
-           fmt = parts[1];
-         }
-
          return fmt
           // put space after double % to prevent placeholder replacement of such matches
           .replace(/%%/g, '%% ')
@@ -64,6 +58,16 @@ var i18n = (function () {
           })
           // replace double % and space with single %
           .replace(/%% /g, '%')
+      };
+
+      var removeContext = function(str) {
+         // if there is context, remove it
+         if (str.indexOf(_ctxt_delimiter) !== -1) {
+           var parts = str.split(_ctxt_delimiter);
+           return parts[1];
+         }
+
+       return str;
       };
 
       var expand_locale = function(locale) {
@@ -98,7 +102,7 @@ var i18n = (function () {
       var t = function (messages, n, options /* ,extra */) {
         // Singular is very easy, just pass dictionnary message through strfmt
         if (1 === messages.length)
-         return strfmt.apply(this, [messages[0]].concat(Array.prototype.slice.call(arguments, 3)));
+         return strfmt.apply(this, [removeContext(messages[0])].concat(Array.prototype.slice.call(arguments, 3)));
 
         var plural;
 
@@ -120,7 +124,7 @@ var i18n = (function () {
         if ('undefined' === typeof plural.plural || plural.plural > plural.nplurals || messages.length <= plural.plural)
           plural.plural = 0;
 
-        return strfmt.apply(this, [messages[plural.plural], n].concat(Array.prototype.slice.call(arguments, 3)));
+        return strfmt.apply(this, [removeContext(messages[plural.plural]), n].concat(Array.prototype.slice.call(arguments, 3)));
       };
 
     return {
