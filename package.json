@@ -29,5 +29,6 @@
   "spm": {
     "main": "lib/gettext.js"
   },
-  "main": "lib/gettext.js"
+  "main": "dist/gettext.cjs.min.js",
+  "module": "lib/gettext.js"
 }
