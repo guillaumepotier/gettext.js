@@ -101,7 +101,7 @@ var i18n = (function () {
       // Contains juicy parts of https://github.com/Orange-OpenSource/gettext.js/blob/master/lib.gettext.js
       var t = function (messages, n, options /* ,extra */) {
         // Singular is very easy, just pass dictionnary message through strfmt
-        if (1 === messages.length)
+        if (!options.plural_form)
          return strfmt.apply(this, [removeContext(messages[0])].concat(Array.prototype.slice.call(arguments, 3)));
 
         var plural;
@@ -196,7 +196,7 @@ var i18n = (function () {
 
         var
           translation,
-          options = {},
+          options = { plural_form: false },
           key = msgctxt ? msgctxt + _ctxt_delimiter + msgid : msgid,
           exist,
           locale,
@@ -231,6 +231,7 @@ var i18n = (function () {
           return t.apply(this, [[translation], n, options].concat(Array.prototype.slice.call(arguments, 5)));
 
         // Plural one
+        options.plural_form = true;
         return t.apply(this, [exist ? translation : [msgid, msgid_plural], n, options].concat(Array.prototype.slice.call(arguments, 5)));
       }
     };
