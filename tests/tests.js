@@ -261,7 +261,6 @@
                             "%1 lisaun iha."
                         ]
                     }, 'nplurals=1; plural=0;');
-                    console.log('here');
                     expect(i18n.ngettext('%1 lesson left.', '%1 lessons left.', 1)).to.be('1 lisaun iha.');
                     expect(i18n.ngettext('%1 lesson left.', '%1 lessons left.', 5)).to.be('5 lisaun iha.');
                     expect(i18n.ngettext('%1 lesson left in %2.', '%1 lessons left in %2.', 1, 'Mathematics')).to.be('1 lisaun iha Mathematics');
