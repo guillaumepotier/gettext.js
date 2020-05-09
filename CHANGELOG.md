@@ -1,5 +1,11 @@
 # gettext.js changelog
 
+**[1.0.0]**
+
+    - add support for single plural languages
+
+**[0.5.3]**
+
     - add support for language with subtags
 
 **[0.5.2]**
