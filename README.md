@@ -140,7 +140,7 @@ or without variables
 
 ## Required JSON format
 
-You'll find in `/bin` a `po2json.js` converter, based on the excellent
+You'll find in `/bin` a `po2json-gettextjs` converter, based on the excellent
 [po2json](https://github.com/mikeedwards/po2json) project that will dump your
 `.po` files into the proper json format below:
 
@@ -161,8 +161,8 @@ You'll find in `/bin` a `po2json.js` converter, based on the excellent
 }
 ```
 
-Use `bin/po2json.js input.po output.json` or
-`bin/po2json.js input.po output.json -p` for pretty format.
+Use `bin/po2jsonpo2json-gettextjs input.po output.json` or
+`bin/po2jsonpo2json-gettextjs input.po output.json -p` for pretty format.
 
 
 ## Parsers
