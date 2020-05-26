@@ -140,9 +140,9 @@ or without variables
 
 ## Required JSON format
 
-You'll find in `/bin` a `po2json-gettextjs` converter. A `po2json` wrapper for `gettext.js`
-based on the excellent [po2json](https://github.com/mikeedwards/po2json) project that will
-dump your `.po` files into the proper json format below:
+You'll find in `/bin` a `po2json-gettextjs` converter, based on the excellent
+[po2json](https://github.com/mikeedwards/po2json) project that will dump your
+`.po` files into the proper json format below:
 
 ```json
 {
