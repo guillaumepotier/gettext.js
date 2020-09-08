@@ -39,7 +39,7 @@ Install the lib with the following command: `npm install gettext.js --save`
 Require it in your project:
 
 ```javascript
-var i18n = require('gettext.js');
+var i18n = require('gettext.js')();
 i18n.gettext('foo');
 ```
 
