@@ -1,4 +1,4 @@
-# gettext.js
+# gettext.js [![npm version](https://badge.fury.io/js/gettext.js.svg)](https://badge.fury.io/js/gettext.js)
 
 gettext.js is a lightweight (3k minified!) yet complete and accurate GNU
 gettext port for node and the browser. Manage your i18n translations the right
@@ -52,12 +52,16 @@ Download the latest
 get it through bower: `bower install gettext.js --save`
 
 ```html
-<script src="/path/to/gettext.js" type="text/javascript"></script>
+<script src="/path/to/dist/gettext.iife.js" type="text/javascript"></script>
 <script>
   var i18n = window.i18n(options);
   i18n.gettext('foo');
 </script>
 ```
+
+In addition to the IIFE version, we also provide CommonJS (Node), AMD, and ESM
+releases. Instead of downloading, you may use a NPM CDN online such as unpkg or
+jsDelivr.
 
 ## Usage
 
