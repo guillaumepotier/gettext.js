@@ -1,4 +1,4 @@
-# gettext.js
+# gettext.js [![npm version](https://badge.fury.io/js/gettext.js.svg)](https://badge.fury.io/js/gettext.js)
 
 gettext.js is a lightweight (3k minified!) yet complete and accurate GNU
 gettext port for node and the browser. Manage your i18n translations the right
@@ -43,6 +43,8 @@ var i18n = require('gettext.js')();
 i18n.gettext('foo');
 ```
 
+For TypeScript definitions, use the third-party `@types/gettext.js` module.
+
 ### Browser
 
 Download the latest
@@ -50,12 +52,16 @@ Download the latest
 get it through bower: `bower install gettext.js --save`
 
 ```html
-<script src="/path/to/gettext.js" type="text/javascript"></script>
+<script src="/path/to/dist/gettext.iife.js" type="text/javascript"></script>
 <script>
   var i18n = window.i18n(options);
   i18n.gettext('foo');
 </script>
 ```
+
+In addition to the IIFE version, we also provide CommonJS (Node), AMD, and ESM
+releases. Instead of downloading, you may use a NPM CDN online such as unpkg or
+jsDelivr.
 
 ## Usage
 
@@ -107,18 +113,16 @@ or from javascript
 i18n.setLocale('fr');
 ```
 
+### Gettext functions
 
-### `gettext(msgid)`
-
-Translate a string.
-
-
-### `ngettext(msgid, msgid_plural, n)`
-
-Translate a pluralizable string
-
+* **`gettext(msgid)`**: Translate a string. Shorthand is **`__()`**.
+* **`ngettext(msgid, msgid_plural, n)`**: Translate a pluralizable string. Shorthand is **`_n()`**.
+* **`pgettext(msgctxt, msgid)`**: Translate a string specified by context. Shorthand is **`_p()`**.
+* **`dcnpgettext(domain, msgctxt, msgid, msgid_plural, n)`**: Translate a potentially pluralizable string, potentially specified by context, and potentially of a different domain (as specified in `setMessages` or `loadJSON`). No shorthand.
 
 ### Variabilized strings
+
+All four functions above can take extra arguments for variablization.
 
 `gettext('There are %1 in the %2', 'apples', 'bowl');` -> "There are apples in the bowl
 
