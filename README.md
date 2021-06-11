@@ -43,6 +43,8 @@ var i18n = require('gettext.js')();
 i18n.gettext('foo');
 ```
 
+For TypeScript definitions, use the third-party `@types/gettext.js` module.
+
 ### Browser
 
 Download the latest
@@ -107,18 +109,16 @@ or from javascript
 i18n.setLocale('fr');
 ```
 
+### Gettext functions
 
-### `gettext(msgid)`
-
-Translate a string.
-
-
-### `ngettext(msgid, msgid_plural, n)`
-
-Translate a pluralizable string
-
+* `gettext(msgid)`: Translate a string. Shorthand is `__()`.
+* `ngettext(msgid, msgid_plural, n)`: Translate a pluralizable string. Shorthand is `_n()`.
+* `pgettext(msgctxt, msgid)`: Translate a string specified by context. Shorthand is `_p()`.
+* `dcnpgettext(domain, msgctxt, msgid, msgid_plural, n)`: Translate a potentially pluralizable string, potentially specified by context, and potentially of a different domain (as specified in `setMessages` or `loadJSON`). No shorthand.
 
 ### Variabilized strings
+
+All four functions above can take extra arguments for variablization.
 
 `gettext('There are %1 in the %2', 'apples', 'bowl');` -> "There are apples in the bowl
 
