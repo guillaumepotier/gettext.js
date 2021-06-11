@@ -111,10 +111,10 @@ i18n.setLocale('fr');
 
 ### Gettext functions
 
-* `gettext(msgid)`: Translate a string. Shorthand is `__()`.
-* `ngettext(msgid, msgid_plural, n)`: Translate a pluralizable string. Shorthand is `_n()`.
-* `pgettext(msgctxt, msgid)`: Translate a string specified by context. Shorthand is `_p()`.
-* `dcnpgettext(domain, msgctxt, msgid, msgid_plural, n)`: Translate a potentially pluralizable string, potentially specified by context, and potentially of a different domain (as specified in `setMessages` or `loadJSON`). No shorthand.
+* **`gettext(msgid)`**: Translate a string. Shorthand is **`__()`**.
+* **`ngettext(msgid, msgid_plural, n)`**: Translate a pluralizable string. Shorthand is **`_n()`**.
+* **`pgettext(msgctxt, msgid)`**: Translate a string specified by context. Shorthand is **`_p()`**.
+* **`dcnpgettext(domain, msgctxt, msgid, msgid_plural, n)`**: Translate a potentially pluralizable string, potentially specified by context, and potentially of a different domain (as specified in `setMessages` or `loadJSON`). No shorthand.
 
 ### Variabilized strings
 
