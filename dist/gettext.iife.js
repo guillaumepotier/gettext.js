@@ -4,7 +4,7 @@ var i18n = (function () {
    /*! gettext.js - Guillaume Potier - MIT Licensed */
    var i18n = function (options) {
     options = options || {};
-    this && (this.__version = '1.0.0');
+    this && (this.__version = '1.1.1');
 
     // default values that could be overriden in i18n() construct
     var defaults = {
@@ -80,13 +80,12 @@ var i18n = (function () {
           }
           return locales;
       };
-    
-      var normalizeLocale = function(locale) {
+
+      var normalizeLocale = function (locale) {
          // Convert locale to BCP 47. If the locale is in POSIX format, locale variant and encoding is discarded.
          locale = locale.replace('_', '-');
          var i = locale.search(/[.@]/);
-         if(i != -1)
-            locale = locale.slice(0, i);
+         if (i != -1) locale = locale.slice(0, i);
          return locale;
       };
 
@@ -151,7 +150,7 @@ var i18n = (function () {
 
         if ('string' !== typeof domain || 'string' !== typeof locale || !_.isObject(messages))
           throw new Error('Invalid arguments');
-       
+
         locale = normalizeLocale(locale);
 
         if (plural_forms)
