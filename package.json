@@ -11,7 +11,7 @@
     "po2json-gettextjs": "bin/po2json"
   },
   "dependencies": {
-    "po2json": "^0.4.0"
+    "po2json": "^1.0.0-beta-3"
   },
   "devDependencies": {
     "del": "latest",
