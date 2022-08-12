@@ -120,16 +120,29 @@ i18n.setLocale('fr');
 * **`pgettext(msgctxt, msgid)`**: Translate a string specified by context. Shorthand is **`_p()`**.
 * **`dcnpgettext(domain, msgctxt, msgid, msgid_plural, n)`**: Translate a potentially pluralizable string, potentially specified by context, and potentially of a different domain (as specified in `setMessages` or `loadJSON`). No shorthand.
 
+
+### Plural forms
+
+`ngettext` and `dcnpgettext` accept a `n` parameter to specify the plural form.
+
+```javascript
+i18n.ngettext('There is an apple', 'There are many apples', 1); // There is an apple
+i18n.ngettext('There is an apple', 'There are many apples', 10); // There are many apples
+i18n.ngettext('There is %1 apple', 'There are %1 apples', 10); // There are %1 apples
+i18n.ngettext('There is %1 apple', 'There are %1 apples', 10, 10); // There are 10 apples
+```
+
 ### Variabilized strings
 
 All four functions above can take extra arguments for variablization.
 
 `gettext('There are %1 in the %2', 'apples', 'bowl');` -> "There are apples in the bowl
 
-`ngettext('One %2', '%1 %2', 10, 'bananas');` -> "10 bananas"
+`ngettext('One %2', '%1 %2', 10, 10, 'bananas');` -> "10 bananas"
 
 It uses the public method `i18n.strfmt("string", var1, var2, ...)` you could
 reuse elsewhere in your project.
+
 
 #### Literal percent sign (%)
 

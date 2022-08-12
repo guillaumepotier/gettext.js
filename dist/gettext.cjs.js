@@ -3,7 +3,7 @@
 /*! gettext.js - Guillaume Potier - MIT Licensed */
 var i18n = function (options) {
  options = options || {};
- this && (this.__version = '1.1.1');
+ this && (this.__version = '2.0.0');
 
  // default values that could be overriden in i18n() construct
  var defaults = {
