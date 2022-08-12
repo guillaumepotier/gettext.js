@@ -2,4 +2,5 @@ language: node_js
 node_js:
   - 9
 script:
+  - npm build
   - npm run-script test
