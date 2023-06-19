@@ -3,7 +3,7 @@
 /*! gettext.js - Guillaume Potier - MIT Licensed */
 var i18n = function (options) {
  options = options || {};
- this && (this.__version = '1.1.1');
+ this && (this.__version = '2.0.0');
 
  // default values that could be overriden in i18n() construct
  var defaults = {
@@ -131,7 +131,7 @@ var i18n = function (options) {
      if ('undefined' === typeof plural.plural || plural.plural > plural.nplurals || messages.length <= plural.plural)
        plural.plural = 0;
 
-     return strfmt.apply(this, [removeContext(messages[plural.plural]), n].concat(Array.prototype.slice.call(arguments, 3)));
+     return strfmt.apply(this, [removeContext(messages[plural.plural])].concat(Array.prototype.slice.call(arguments, 3)));
    };
 
  return {

@@ -47,10 +47,10 @@
                 expect(i18n.gettext('foo')).to.be('bar');
                 expect(i18n.gettext('ctxt\u0004foo')).to.be('baz');
                 expect(i18n.gettext('ctxt\u0004baz')).to.be('baz');
-                expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2)).to.be("Il y a 2 pommes");
-                expect(i18n.ngettext('ctxt\u0004There is %1 apple', 'There are %1 apples', 1)).to.be("Il y a 1 pomme Golden");
-                expect(i18n.ngettext('ctxt\u0004There is %1 orange', 'There are %1 oranges', 1)).to.be("There is 1 orange");
-                expect(i18n.ngettext('ctxt\u0004There is %1 orange', 'There are %1 oranges', 3)).to.be("There are 3 oranges");
+                expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2, 2)).to.be("Il y a 2 pommes");
+                expect(i18n.ngettext('ctxt\u0004There is %1 apple', 'There are %1 apples', 1, 1)).to.be("Il y a 1 pomme Golden");
+                expect(i18n.ngettext('ctxt\u0004There is %1 orange', 'There are %1 oranges', 1, 1)).to.be("There is 1 orange");
+                expect(i18n.ngettext('ctxt\u0004There is %1 orange', 'There are %1 oranges', 3, 3)).to.be("There are 3 oranges");
             });
         });
         describe('methods', function () {
@@ -126,19 +126,19 @@
             describe('ngettext', function () {
                 it('should handle peacefully plural untranslated keys', function () {
                     // english default plural rule is n !== 1
-                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 0)).to.be('0 not translated plural');
-                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 1)).to.be('1 not translated singular');
-                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 3)).to.be('3 not translated plural');
+                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 0, 0)).to.be('0 not translated plural');
+                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 1, 1)).to.be('1 not translated singular');
+                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 3, 3)).to.be('3 not translated plural');
                 });
                 it('should handle peacefully plural untranslated keys with extra', function () {
-                    expect(i18n.ngettext('%1 not %2 singular', '%1 not %2 plural', 1, 'foo')).to.be('1 not foo singular');
-                    expect(i18n.ngettext('%1 not %2 singular', '%1 not %2 plural', 3, 'foo')).to.be('3 not foo plural');
+                    expect(i18n.ngettext('%1 not %2 singular', '%1 not %2 plural', 1, 1, 'foo')).to.be('1 not foo singular');
+                    expect(i18n.ngettext('%1 not %2 singular', '%1 not %2 plural', 3, 3, 'foo')).to.be('3 not foo plural');
                 });
                 it('should use default english plural form for untranslated keys', function () {
                     i18n = new window.i18n({ locale: 'fr', plural_forms: 'nplurals=2; plural=n>1;' });
-                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 0)).to.be('0 not translated plural');
-                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 1)).to.be('1 not translated singular');
-                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 3)).to.be('3 not translated plural');
+                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 0, 0)).to.be('0 not translated plural');
+                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 1, 1)).to.be('1 not translated singular');
+                    expect(i18n.ngettext('%1 not translated singular', '%1 not translated plural', 3, 3)).to.be('3 not translated plural');
                 });
                 it('should handle correctly other language plural passed through setMessages method', function () {
                     i18n = new window.i18n({locale: 'fr'});
@@ -148,9 +148,9 @@
                             "Il y a %1 pommes"
                         ]
                     }, 'nplurals=2; plural=n>1;');
-                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 0)).to.be('Il y a 0 pomme');
-                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 1)).to.be('Il y a 1 pomme');
-                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2)).to.be('Il y a 2 pommes');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 0, 0)).to.be('Il y a 0 pomme');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 1, 1)).to.be('Il y a 1 pomme');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2, 2)).to.be('Il y a 2 pommes');
                 });
                 it('should handle correctly other language plural passed through init options', function () {
                     i18n = new window.i18n({
@@ -163,9 +163,9 @@
                         },
                         plural_forms: 'nplurals=2; plural=n>1;'
                     });
-                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 0)).to.be('Il y a 0 pomme');
-                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 1)).to.be('Il y a 1 pomme');
-                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2)).to.be('Il y a 2 pommes');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 0, 0)).to.be('Il y a 0 pomme');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 1, 1)).to.be('Il y a 1 pomme');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2, 2)).to.be('Il y a 2 pommes');
                 });
                 it('should ignore a plural translation when requesting the singular form', function () {
                     i18n = new window.i18n({ locale: 'fr' });
@@ -176,8 +176,8 @@
                         ]
                     }, 'nplurals=2; plural=n>1;');
                     expect(i18n.gettext('apple')).to.be('apple');
-                    expect(i18n.ngettext('apple', 'apples', 1)).to.be('pomme');
-                    expect(i18n.ngettext('apple', 'apples', 2)).to.be('pommes');
+                    expect(i18n.ngettext('apple', 'apples', 1, 1)).to.be('pomme');
+                    expect(i18n.ngettext('apple', 'apples', 2, 2)).to.be('pommes');
                 });
                 it('should ignore a singular translation when requesting the plural form', function () {
                     i18n = new window.i18n({ locale: 'fr' });
@@ -185,8 +185,8 @@
                         "apple": "pomme"
                     });
                     expect(i18n.gettext('apple')).to.be('pomme');
-                    expect(i18n.ngettext('apple', 'apples', 1)).to.be('apple');
-                    expect(i18n.ngettext('apple', 'apples', 2)).to.be('apples');
+                    expect(i18n.ngettext('apple', 'apples', 1, 1)).to.be('apple');
+                    expect(i18n.ngettext('apple', 'apples', 2, 2)).to.be('apples');
                 });
                 it('should fail unvalid plural form', function () {
                     i18n = new window.i18n({ locale: 'foo' });
@@ -237,7 +237,7 @@
                             "pommes"
                         ]
                     }, 'nplurals=2; plural=3;');
-                    expect(i18n.ngettext('apple', 'apples', 1)).to.be('pomme');
+                    expect(i18n.ngettext('apple', 'apples', 1, 1)).to.be('pomme');
 
                     // plural is correct, but according to nplurals there should be more translations
                     i18n = new window.i18n({ locale: 'ru' });
@@ -248,7 +248,7 @@
                             // "%1 яблок" - missed translation
                         ]
                     }, "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
-                    expect(i18n.ngettext('%1 apple', '%1 apples', 5)).to.be('5 яблоко');
+                    expect(i18n.ngettext('%1 apple', '%1 apples', 5, 5)).to.be('5 яблоко');
                 });
                 it('should correctly handle substitution when an array of one message is provided in an nplurals=1 locale', function () {
                     i18n = new window.i18n({ locale: 'tdt' });
@@ -261,10 +261,21 @@
                             "%1 lisaun iha."
                         ]
                     }, 'nplurals=1; plural=0;');
-                    expect(i18n.ngettext('%1 lesson left.', '%1 lessons left.', 1)).to.be('1 lisaun iha.');
-                    expect(i18n.ngettext('%1 lesson left.', '%1 lessons left.', 5)).to.be('5 lisaun iha.');
-                    expect(i18n.ngettext('%1 lesson left in %2.', '%1 lessons left in %2.', 1, 'Mathematics')).to.be('1 lisaun iha Mathematics');
-                    expect(i18n.ngettext('%1 lesson left in %2.', '%1 lessons left in %2.', 5, 'Mathematics')).to.be('5 lisaun iha Mathematics');
+                    expect(i18n.ngettext('%1 lesson left.', '%1 lessons left.', 1, 1)).to.be('1 lisaun iha.');
+                    expect(i18n.ngettext('%1 lesson left.', '%1 lessons left.', 5, 5)).to.be('5 lisaun iha.');
+                    expect(i18n.ngettext('%1 lesson left in %2.', '%1 lessons left in %2.', 1, 1, 'Mathematics')).to.be('1 lisaun iha Mathematics');
+                    expect(i18n.ngettext('%1 lesson left in %2.', '%1 lessons left in %2.', 5, 5, 'Mathematics')).to.be('5 lisaun iha Mathematics');
+                });
+                it('should handle plural form and strfmt subsitutions without messing with indexes', function () {
+                    i18n = new window.i18n();
+                    var string = i18n.ngettext(
+                        "%1 (%2 charge)",
+                        "%1 (%2 charges)",
+                        3,
+                        'defibrillator',
+                        3
+                    );
+                    expect(string).to.be('defibrillator (3 charges)');
                 });
             });
 
@@ -290,8 +301,8 @@
                     expect(i18n.textdomain(), 'messages');
                     expect(i18n.gettext('Save')).to.be('Sauvegarder');
                     expect(i18n.gettext('Loading...')).to.be('Chargement...');
-                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 0)).to.be('Il y a 0 pomme');
-                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2)).to.be('Il y a 2 pommes');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 0, 0)).to.be('Il y a 0 pomme');
+                    expect(i18n.ngettext('There is %1 apple', 'There are %1 apples', 2, 2)).to.be('Il y a 2 pommes');
                 });
             });
         });

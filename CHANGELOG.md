@@ -1,5 +1,10 @@
 # gettext.js changelog
 
+**[2.0.0]** [BC Break]
+
+    - ngettext, dcnpgettext bc break change to match better the GNU gettext
+    plural form specification.
+
 **[1.0.0]**
 
     - add support for single plural languages
