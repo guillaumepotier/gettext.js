@@ -178,8 +178,8 @@ You'll find in `/bin` a `po2json.js` converter, based on the excellent [po2json]
     "language": "en",
     "plural-forms": "nplurals=2; plural=(n!=1);"
   },
-  "simple key": "It's tranlation",
-  "another with %1 parameter": "It's %1 tranlsation",
+  "simple key": "It's translation",
+  "another with %1 parameter": "It's %1 translation",
   "a key with plural": [
     "a plural form",
     "another plural form",
