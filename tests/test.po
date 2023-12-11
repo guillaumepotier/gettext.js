@@ -1,0 +1,10 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "foo"
+msgstr "bar"
+
+msgid "%1 foo"
+msgid_plural "%1 foos"
+msgstr[0] ""

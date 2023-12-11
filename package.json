@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "license": "MIT",
   "scripts": {
-    "test": "karma start tests/karma.config.js",
+    "test": "karma start tests/karma.config.js && node tests/po2json.test.js",
     "test-dev": "karma start tests/karma.config.dev.js",
     "build": "./node_modules/.bin/gulp"
   },

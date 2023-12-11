@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --no-deprecation
 
 /*
   po2json wrapper for gettext.js
@@ -47,8 +47,14 @@ fs.readFile(argv[2], function (err, buffer) {
       continue;
     }
 
+    console.log(key, jsonData[key]);
+
     // Do not dump untranslated keys, they already are in the templates!
+<<<<<<< Updated upstream
     if ('' !== jsonData[key][1].length ? jsonData[key][1][0] : jsonData[key][1])
+=======
+    if ('' !== (jsonData[key][1].length ? jsonData[key][1][0] : jsonData[key][1]))
+>>>>>>> Stashed changes
       json[key] = 2 === jsonData[key].length ? jsonData[key][1] : jsonData[key].slice(1);
   }
 

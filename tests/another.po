@@ -1,0 +1,11 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "foo"
+msgstr "bar"
+
+msgid "{count} foo"
+msgid_plural "{count} foos"
+msgstr[0] ""
+msgstr[1] ""
