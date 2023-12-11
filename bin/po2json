@@ -48,7 +48,7 @@ fs.readFile(argv[2], function (err, buffer) {
     }
 
     // Do not dump untranslated keys, they already are in the templates!
-    if ('' !== jsonData[key][1])
+    if ('' !== jsonData[key][1].length ? jsonData[key][1][0] : jsonData[key][1])
       json[key] = 2 === jsonData[key].length ? jsonData[key][1] : jsonData[key].slice(1);
   }
 
