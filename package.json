@@ -1,6 +1,6 @@
 {
   "name": "gettext.js",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "license": "MIT",
   "scripts": {
     "test": "karma start tests/karma.config.js && node tests/po2json.test.js",
