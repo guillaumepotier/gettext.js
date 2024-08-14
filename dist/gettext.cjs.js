@@ -94,8 +94,12 @@ var i18n = function (options) {
      // plural forms list available here http://localization-guide.readthedocs.org/en/latest/l10n/pluralforms.html
      var pf_re = new RegExp('^\\s*nplurals\\s*=\\s*[0-9]+\\s*;\\s*plural\\s*=\\s*(?:\\s|[-\\?\\|&=!<>+*/%:;n0-9_\(\)])+');
 
-     if (!pf_re.test(plural_form))
+     var match = plural_form.match(pf_re);
+
+     if (!match || match[0] !== plural_form)
        throw new Error(strfmt('The plural form "%1" is not valid', plural_form));
+
+     console.log('>>> Plural form:', plural_form);
 
      // Careful here, this is a hidden eval() equivalent..
      // Risk should be reasonable though since we test the plural_form through regex before

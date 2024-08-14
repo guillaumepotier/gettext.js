@@ -206,6 +206,24 @@
                         expect(e.message).to.be('The plural form "nplurals=2; plural=[not valid];" is not valid');
                     }
                 });
+                it('should fail another unvalid plural form', function () {
+                    i18n = new window.i18n({ locale: 'foo' });
+                    i18n.setMessages('messages', 'foo', {
+                        "There is %1 apple": [
+                            "Il y a %1 pomme",
+                            "Il y a %1 pommes"
+                        ]
+                    }, 'nplurals=2; plural=n>1; console.log(`PWNED!`);');
+
+                    // do not throw error on default plural form if key does not have a translation
+                    expect(i18n.ngettext('foo', 'bar', 2)).to.be('bar');
+
+                    try {
+                        i18n.ngettext('There is %1 apple', 'There are %1 apples', 42);
+                    } catch (e) {
+                        expect(e.message).to.be('The plural form "nplurals=2; plural=n>1; console.log(`PWNED!`);" is not valid');
+                    }
+                });
                 it('should handle multiple locale & pluals cohabitation', function () {
                     i18n = new window.i18n({ locale: 'foo' });
                     i18n.setMessages('messages', 'foo', {
