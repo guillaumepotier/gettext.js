@@ -52,6 +52,16 @@
                 expect(i18n.ngettext('ctxt\u0004There is %1 orange', 'There are %1 oranges', 1, 1)).to.be("There is 1 orange");
                 expect(i18n.ngettext('ctxt\u0004There is %1 orange', 'There are %1 oranges', 3, 3)).to.be("There are 3 oranges");
             });
+            it('should allow to set custom strfmt function for translations only', function () {
+                var i18n = window.i18n({
+                    translations_strfmt: function (fmt) {
+                      return fmt;
+                    },
+                });
+
+                expect(i18n.gettext('foo %1 baz')).to.be('foo %1 baz');
+                expect(i18n.strfmt('foo %1 baz', 'bar')).to.be('foo bar baz');
+            });
         });
         describe('methods', function () {
             var i18n;
