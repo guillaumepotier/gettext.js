@@ -175,7 +175,7 @@ Instead of automatically formatting all the variables inside translated strings 
 
 ```javascript
 var i18n = window.i18n({
-  translations_strfmt: function (fmt) {
+  gettext_strfmt: function (fmt) {
     var args = arguments;
 
     // fmt = 'There are %1 apples'
@@ -187,7 +187,7 @@ var i18n = window.i18n({
 });
 ```
 
-Do note that `i18n.strfmt()` will never point to your custom formatter function, it'll always be this library's own implementation. The custom function is only used for strings translated via the `*gettext()` functions.
+Do note that `i18n.strfmt()` will never point to your custom formatter function, it'll always be this library's own implementation. The custom function is only used for strings translated via the `*gettext()` functions, as the option name implies.
 
 ## Required JSON format
 

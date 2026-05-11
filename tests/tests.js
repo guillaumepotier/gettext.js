@@ -54,7 +54,7 @@
             });
             it('should allow to set custom strfmt function for translations only', function () {
                 var i18n = window.i18n({
-                    translations_strfmt: function (fmt) {
+                    gettext_strfmt: function (fmt) {
                       return fmt;
                     },
                 });
