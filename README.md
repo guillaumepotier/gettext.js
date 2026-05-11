@@ -168,6 +168,27 @@ Or without variables:
 
 `gettext('My credit card has an interest rate of %%20');` -> "My credit card has an interest rate of %20"
 
+
+#### Custom formatter function
+
+Instead of automatically formatting all the variables inside translated strings via the built-in `i18n.strfmt()` function, you can also set a custom formatter. For example:
+
+```javascript
+var i18n = window.i18n({
+  gettext_strfmt: function (fmt) {
+    var args = arguments;
+
+    // fmt = 'There are %1 apples'
+    // args = ['There are %1 apples', 10]
+    return fmt.replace(/%(\d+)/g, function (match, number) {
+      return typeof args[number] !== 'undefined' ? args[number] : match;
+    });
+  },
+});
+```
+
+Do note that `i18n.strfmt()` will never point to your custom formatter function, it'll always be this library's own implementation. The custom function is only used for strings translated via the `*gettext()` functions, as the option name implies.
+
 ## Required JSON format
 
 You'll find in `/bin` a `po2json.js` converter, based on the excellent [po2json](https://github.com/mikeedwards/po2json) project that will dump your `.po` files into the proper JSON format below:
