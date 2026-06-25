@@ -99,8 +99,6 @@ define(function () { 'use strict';
         if (!match || match[0] !== plural_form)
           throw new Error(strfmt('The plural form "%1" is not valid', plural_form));
 
-        console.log('>>> Plural form:', plural_form);
-
         // Careful here, this is a hidden eval() equivalent..
         // Risk should be reasonable though since we test the plural_form through regex before
         // taken from https://github.com/Orange-OpenSource/gettext.js/blob/master/lib.gettext.js
